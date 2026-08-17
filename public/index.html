@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trail Timer</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Trail Timer</h1>
+        <p>Draw or upload a hiking route and get an instant duration breakdown.</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel map-panel">
+        <div id="map"></div>
+        <p class="hint">Use the line tool on the left side of the map to draw a route. You can also upload GeoJSON below.</p>
+      </section>
+
+      <section class="panel controls-panel">
+        <h2>Plan a route</h2>
+        <form id="estimate-form">
+          <label>
+            Route name
+            <input id="route-name" name="name" value="Morning trail" required maxlength="120" />
+          </label>
+
+          <label>
+            Upload GeoJSON route
+            <input id="geojson-file" type="file" accept=".geojson,.json,application/geo+json,application/json" />
+          </label>
+
+          <div class="grid">
+            <label>
+              Pace (min/km)
+              <input id="pace" type="number" min="1" max="60" step="0.1" value="12" required />
+            </label>
+            <label>
+              Elevation gain (m)
+              <input id="elevation" type="number" min="0" max="10000" step="1" value="250" required />
+            </label>
+            <label>
+              Stops (minutes)
+              <input id="stops" type="number" min="0" max="2000" step="1" value="20" required />
+            </label>
+          </div>
+
+          <button type="submit">Estimate trip time</button>
+          <button type="button" id="clear-route" class="secondary">Clear map route</button>
+        </form>
+
+        <div id="status" class="status"></div>
+
+        <div id="result" class="result hidden">
+          <h2>Estimate</h2>
+          <div class="total" id="total-time"></div>
+          <dl>
+            <div><dt>Distance</dt><dd id="distance"></dd></div>
+            <div><dt>Base walking</dt><dd id="base"></dd></div>
+            <div><dt>Elevation penalty</dt><dd id="elevation-penalty"></dd></div>
+            <div><dt>Stops</dt><dd id="stop-penalty"></dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="panel recent-panel">
+        <h2>Recent routes</h2>
+        <div id="recent-routes" class="recent-routes"></div>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>
